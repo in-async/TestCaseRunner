@@ -7,6 +7,18 @@ namespace InAsync.Tests {
     [TestClass]
     public class TestCaseRunnerTests {
 
+        [DataTestMethod]
+        [DataRow(0, null, null, typeof(ArgumentNullException))]
+        [DataRow(1, "123", 123, null)]
+        public void Usage(int testNumber, string input, int expected, Type expectedExceptionType) {
+            new TestCaseRunner($"No.{testNumber}")
+                .Run(() => int.Parse(input))
+                .Verify(
+                    (result, description) => Assert.AreEqual(expected, result, description),
+                    (ex, description) => Assert.AreEqual(expectedExceptionType, ex?.GetType(), description)
+                );
+        }
+
         [TestMethod]
         public void TestCaseRunner() {
             foreach (var item in TestCases()) {
