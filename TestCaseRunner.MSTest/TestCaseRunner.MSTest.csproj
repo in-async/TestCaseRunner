@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.0;net45;netstandard1.0</TargetFrameworks>
+    <AssemblyName>InAsync.TestCaseRunner.MSTest</AssemblyName>
+    <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestCaseRunner.Core\TestCaseRunner.Core.csproj" />
+  </ItemGroup>
+
+</Project>
