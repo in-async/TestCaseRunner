@@ -18,18 +18,18 @@
 ### Basic
 ```cs
 public void IntParseTest() {
-    new TestCaseRunner($"Success")
+    new TestCaseRunner("Success")
         .Run(() => int.Parse("123"))
         .Verify(
-            (result, description) => Assert.Equals(123, result, description),
-            (exception, description) => Assert.Equals(null, exception?.GetType(), description)
+            (result, description) => result.Is(123, description),
+            (exception, description) => exception?.GetType().Is(null, description)
         );
 
-    new TestCaseRunner($"Exception")
+    new TestCaseRunner("Exception")
         .Run(() => int.Parse("abc"))
         .Verify(
-            (result, description) => {},
-            (exception, description) => Assert.Equals(typeof(FormatException), exception?.GetType(), description)
+            (result, description) => { },
+            (exception, description) => exception?.GetType().Is(typeof(FormatException), description)
         );
 }
 ```
@@ -38,11 +38,11 @@ public void IntParseTest() {
 ```cs
 [TestMethod]
 public void IntParseTest() {
-    new TestCaseRunner($"Success")
+    new TestCaseRunner("Success")
         .Run(() => int.Parse("123"))
         .Verify(123, null);
 
-    new TestCaseRunner($"Failed")
+    new TestCaseRunner("Failed")
         .Run(() => int.Parse("abc"))
         .Verify(0, typeof(FormatException));
 }
