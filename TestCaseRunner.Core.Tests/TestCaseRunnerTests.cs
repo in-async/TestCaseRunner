@@ -10,6 +10,7 @@ namespace InAsync.Tests {
         [DataTestMethod]
         [DataRow(0, null, null, typeof(ArgumentNullException))]
         [DataRow(1, "123", 123, null)]
+        [DataRow(2, "abc", null, typeof(FormatException))]
         public void Usage(int testNumber, string input, int expected, Type expectedExceptionType) {
             new TestCaseRunner($"No.{testNumber}")
                 .Run(() => int.Parse(input))
