@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCaseRunner.MSTest", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCaseRunner.Core.Tests", "TestCaseRunner.Core.Tests\TestCaseRunner.Core.Tests.csproj", "{851F733F-01FA-4937-8A39-02DBDE4EB972}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCaseRunner.MSTest.Tests", "TestCaseRunner.MSTest.Tests\TestCaseRunner.MSTest.Tests.csproj", "{8648D373-0E7E-4592-BD77-4ABA2759BE7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{851F733F-01FA-4937-8A39-02DBDE4EB972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{851F733F-01FA-4937-8A39-02DBDE4EB972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{851F733F-01FA-4937-8A39-02DBDE4EB972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8648D373-0E7E-4592-BD77-4ABA2759BE7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8648D373-0E7E-4592-BD77-4ABA2759BE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8648D373-0E7E-4592-BD77-4ABA2759BE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8648D373-0E7E-4592-BD77-4ABA2759BE7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
