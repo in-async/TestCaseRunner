@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InAsync.Tests {
@@ -40,17 +39,19 @@ namespace InAsync.Tests {
             }
 
             // テストケース定義。
-            IEnumerable<(int testNumber, ITestActual<int> testActual, TestActualVerifier<int> resultVerifier, TestActualVerifier<Exception> exceptionVerifier, bool expectedResultVerifierCalled, bool expectedExceptionVerifierCalled, Type expectedExceptionType)> TestCases() => new(int testNumber, ITestActual<int> testActual, TestActualVerifier<int> resultVerifier, TestActualVerifier<Exception> exceptionVerifier, bool expectedResultVerifierCalled, bool expectedExceptionVerifierCalled, Type expectedExceptionType)[]{
-                ( 0, TestActual( 0, null)                   , null                      , (ex, description)=>{ }, false, false, typeof(ArgumentNullException)),
-                ( 1, TestActual( 0, null)                   , (result, description)=>{ }, null                  , false, false, typeof(ArgumentNullException)),
-                (10, TestActual( 0, null)                   , (result, description)=>{ }, (ex, description)=>{ }, true , true , null),
-                (11, TestActual( 1, null)                   , (result, description)=>{ }, (ex, description)=>{ }, true , true , null),
-                (12, TestActual(-1, null)                   , (result, description)=>{ }, (ex, description)=>{ }, true , true , null),
-                (13, TestActual( 0, new Exception())        , (result, description)=>{ }, (ex, description)=>{ }, false, true , null),
-                (14, TestActual( 0, new ArgumentException()), (result, description)=>{ }, (ex, description)=>{ }, false, true , null),
+            (int testNumber, ITestActual<int> testActual, TestActualVerifier<int> resultVerifier, TestActualVerifier<Exception> exceptionVerifier, bool expectedResultVerifierCalled, bool expectedExceptionVerifierCalled, Type expectedExceptionType)[] TestCases() => new[]{
+                ( 0, TestActual( 0, null)                   , null            , ExceptionVerifier(), false, false, typeof(ArgumentNullException)),
+                ( 1, TestActual( 0, null)                   , ResultVerifier(), null               , false, false, typeof(ArgumentNullException)),
+                (10, TestActual( 0, null)                   , ResultVerifier(), ExceptionVerifier(), true , true , (Type)null),
+                (11, TestActual( 1, null)                   , ResultVerifier(), ExceptionVerifier(), true , true , (Type)null),
+                (12, TestActual(-1, null)                   , ResultVerifier(), ExceptionVerifier(), true , true , (Type)null),
+                (13, TestActual( 0, new Exception())        , ResultVerifier(), ExceptionVerifier(), false, true , (Type)null),
+                (14, TestActual( 0, new ArgumentException()), ResultVerifier(), ExceptionVerifier(), false, true , (Type)null),
             };
 
             ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new TestCaseRunner("desc").Run(() => (ex == null) ? result : throw ex);
+            TestActualVerifier<int> ResultVerifier() => (result, description) => { };
+            TestActualVerifier<Exception> ExceptionVerifier() => (exception, description) => { };
         }
 
         [TestMethod]
@@ -85,15 +86,17 @@ namespace InAsync.Tests {
             }
 
             // テストケース定義。
-            IEnumerable<(int testNumber, ITestActual testActual, TestActualVerifier resultVerifier, TestActualVerifier<Exception> exceptionVerifier, bool expectedResultVerifierCalled, bool expectedExceptionVerifierCalled, Type expectedExceptionType)> TestCases() => new(int testNumber, ITestActual testActual, TestActualVerifier resultVerifier, TestActualVerifier<Exception> exceptionVerifier, bool expectedResultVerifierCalled, bool expectedExceptionVerifierCalled, Type expectedExceptionType)[]{
-                ( 0, TestActual(null)                   , null              , (ex, description)=>{ }, false, false, typeof(ArgumentNullException)),
-                ( 1, TestActual(null)                   , (description)=>{ }, null                  , false, false, typeof(ArgumentNullException)),
-                (10, TestActual(null)                   , (description)=>{ }, (ex, description)=>{ }, true , true , null),
-                (11, TestActual(new Exception())        , (description)=>{ }, (ex, description)=>{ }, false, true , null),
-                (12, TestActual(new ArgumentException()), (description)=>{ }, (ex, description)=>{ }, false, true , null),
+            (int testNumber, ITestActual testActual, TestActualVerifier resultVerifier, TestActualVerifier<Exception> exceptionVerifier, bool expectedResultVerifierCalled, bool expectedExceptionVerifierCalled, Type expectedExceptionType)[] TestCases() => new[]{
+                ( 0, TestActual(null)                   , null            , ExceptionVerifier(), false, false, typeof(ArgumentNullException)),
+                ( 1, TestActual(null)                   , ResultVerifier(), null               , false, false, typeof(ArgumentNullException)),
+                (10, TestActual(null)                   , ResultVerifier(), ExceptionVerifier(), true , true , (Type)null),
+                (11, TestActual(new Exception())        , ResultVerifier(), ExceptionVerifier(), false, true , (Type)null),
+                (12, TestActual(new ArgumentException()), ResultVerifier(), ExceptionVerifier(), false, true , (Type)null),
             };
 
             ITestActual TestActual(Exception ex) => new TestCaseRunner("desc").Run(() => { if (ex != null) throw ex; });
+            TestActualVerifier ResultVerifier() => (description) => { };
+            TestActualVerifier<Exception> ExceptionVerifier() => (exception, description) => { };
         }
     }
 }

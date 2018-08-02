@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InAsync.Tests {
 
     [TestClass]
     public class TestCaseRunnerTests {
-
-        [DataTestMethod]
-        [DataRow(0, null, null, typeof(ArgumentNullException))]
-        [DataRow(1, "123", 123, null)]
-        [DataRow(2, "abc", null, typeof(FormatException))]
-        public void Usage(int testNumber, string input, int expected, Type expectedExceptionType) {
-            new TestCaseRunner($"No.{testNumber}")
-                .Run(() => int.Parse(input))
-                .Verify(
-                    (result, description) => Assert.AreEqual(expected, result, description),
-                    (ex, description) => Assert.AreEqual(expectedExceptionType, ex?.GetType(), description)
-                );
-        }
 
         [TestMethod]
         public void TestCaseRunner() {
@@ -39,11 +25,11 @@ namespace InAsync.Tests {
             }
 
             // テストケース定義。
-            IEnumerable<(int testNumber, string description, Type expectedExceptionType)> TestCases() => new(int testNumber, string description, Type expectedExceptionType)[]{
-                (10, null , null),
-                (11, ""   , null),
-                (12, "  " , null),
-                (13, "foo", null),
+            (int testNumber, string description, Type expectedExceptionType)[] TestCases() => new[]{
+                (10, null , (Type)null),
+                (11, ""   , (Type)null),
+                (12, "  " , (Type)null),
+                (13, "foo", (Type)null),
             };
         }
 
@@ -68,16 +54,17 @@ namespace InAsync.Tests {
             }
 
             // テストケース定義。
-            IEnumerable<(int testNumber, Func<int> targetCode, ITestActual<int> expected, Type expectedExceptionType)> TestCases() => new(int testNumber, Func<int> targetCode, ITestActual<int> expected, Type expectedExceptionType)[]{
-                ( 0, null                               , null                                   , typeof(ArgumentNullException)),
-                (10, () => 0                            , TestActual( 0, null)                   , null),
-                (11, () => 1                            , TestActual( 1, null)                   , null),
-                (12, () => -1                           , TestActual(-1, null)                   , null),
-                (13, () => throw new Exception()        , TestActual( 0, new Exception())        , null),
-                (14, () => throw new ArgumentException(), TestActual( 0, new ArgumentException()), null),
+            (int testNumber, Func<int> targetCode, ITestActual<int> expected, Type expectedExceptionType)[] TestCases() => new[]{
+                ( 0, null                                     , null                                   , typeof(ArgumentNullException)),
+                (10, Code(() =>  0)                           , TestActual( 0, null)                   , (Type)null),
+                (11, Code(() =>  1)                           , TestActual( 1, null)                   , (Type)null),
+                (12, Code(() => -1)                           , TestActual(-1, null)                   , (Type)null),
+                (13, Code(() => throw new Exception())        , TestActual( 0, new Exception())        , (Type)null),
+                (14, Code(() => throw new ArgumentException()), TestActual( 0, new ArgumentException()), (Type)null),
             };
 
             ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new StubITestActual<TResult>("desc") { Result = result, Exception = ex };
+            Func<int> Code(Func<int> targetCode) => targetCode;
         }
 
         [TestMethod]
@@ -100,14 +87,15 @@ namespace InAsync.Tests {
             }
 
             // テストケース定義。
-            IEnumerable<(int testNumber, Action targetCode, ITestActual expected, Type expectedExceptionType)> TestCases() => new(int testNumber, Action targetCode, ITestActual expected, Type expectedExceptionType)[]{
-                ( 0, null                               , null                                  , typeof(ArgumentNullException)),
-                (10, () => { }                          , TestActual(null)                   , null),
-                (11, () => throw new Exception()        , TestActual(new Exception())        , null),
-                (12, () => throw new ArgumentException(), TestActual(new ArgumentException()), null),
+            (int testNumber, Action targetCode, ITestActual expected, Type expectedExceptionType)[] TestCases() => new[]{
+                ( 0, null                                     , null                               , typeof(ArgumentNullException)),
+                (10, Code(() => { })                          , TestActual(null)                   , (Type)null),
+                (11, Code(() => throw new Exception())        , TestActual(new Exception())        , (Type)null),
+                (12, Code(() => throw new ArgumentException()), TestActual(new ArgumentException()), (Type)null),
             };
 
             ITestActual TestActual(Exception ex) => new StubITestActual("desc") { Exception = ex };
+            Action Code(Action targetCode) => targetCode;
         }
 
         #region Helpers
