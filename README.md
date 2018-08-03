@@ -2,16 +2,34 @@
 `TestCaseRunner` は可読性の高いテストコードを記述するための .NET ライブラリです。
 
 
-## Description
-基本機能は `TestCaseRunner.Core` にあります。 
-
-`TestCaseRunner.MSTest` には、テストコードの実行による戻り値 (actual) の検証処理を簡素化した MSTest 用の拡張メソッドが含まれています。
-
-
 ## Target Frameworks
 - .NET Standard 1.0+
 - .NET Core 1.0+
 - .NET Framework 4.5+
+
+
+## Description
+基本的な使い方は、
+```cs
+new TestCaseRunner(説明)
+    .Run(テスト対象のコード)
+    .Verify(テスト対象コードの戻り値の検証, 例外の検証);
+```
+となります。
+
+もしテストケース毎に前処理が必要であれば、`new TestCaseRunner()` より前に記述します。
+
+`TestCaseRunner` のコンストラクター引数にはそのテストケースの説明を書きます。必要が無ければ引数を省略してください。
+
+`Run()` の引数には、実際にテストしたいメソッドやコードを記述します。  
+ただし、ここにテスト対象でないコードは書かないで下さい。ここに非テストコードを記述すると、そこから発生した例外がテスト対象コードから生じたものとして扱われてしまいます。
+
+
+`Verify()` で `Run()` の結果を検証します。第１引数で `Run()` に渡されたテストコードの戻り値を検証し、第２引数で `Run()` で生じた例外を検証（または例外が生じなかった事を検証）します。
+
+これらの機能は `TestCaseRunner.Core` に含まれています。
+
+もしテストフレームワークに MSTest を使用しているのであれば、`TestCaseRunner.MSTest` を利用することで `Verify()` の記述を簡素化する事もできます。
 
 
 ## Usage
@@ -40,7 +58,7 @@ public void IntParseTest() {
 public void IntParseTest() {
     new TestCaseRunner("Success")
         .Run(() => int.Parse("123"))
-        .Verify(123, null);
+        .Verify(123, (Type)null);
 
     new TestCaseRunner("Failed")
         .Run(() => int.Parse("abc"))
@@ -78,6 +96,7 @@ public void IntParseTest() {
     };
 }
 ```
+`Run()` に渡されたテストコードの戻りちと `Verify()` の第１引数の比較方法ですが、 MSTest の場合 `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual()` によって行われます。
 
 
 ## Licence
