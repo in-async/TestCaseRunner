@@ -1,4 +1,6 @@
 # TestCaseRunner
+[![Build status](https://ci.appveyor.com/api/projects/status/mja7dv0nxrs9u8t3/branch/master?svg=true)](https://ci.appveyor.com/project/in-async/testcaserunner/branch/master)
+
 `TestCaseRunner` は可読性の高いテストコードを記述するための .NET ライブラリです。
 
 
