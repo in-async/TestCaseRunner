@@ -36,12 +36,13 @@ new TestCaseRunner(...)
     .Run(() => { /* ここでテスト対象のメソッドを呼ぶ */ })
 ```
 
-`Verify()` で `Run()` の結果を検証します。第１引数で `Run()` に渡されたテストコードの戻り値を検証し、第２引数で `Run()` で生じた例外を検証（または例外が生じなかった事を検証）します。
+`Verify()` で `Run()` の結果を検証します。  
+第１引数で `Run()` に渡されたテストコードの戻り値を検証し、第２引数で `Run()` で生じた例外を検証（または例外が生じなかった事を検証）します。
 ```cs
     .Run(() => int.Parse("123"))
     .Verify(
         (result, description) => { /* ここで result の検証 */ },
-        (exception, description) => { /* exception の検証 */ }
+        (exception, description) => { /* ここで exception の検証 */ }
     );
 ```
 
