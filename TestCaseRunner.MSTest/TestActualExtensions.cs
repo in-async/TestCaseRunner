@@ -3,7 +3,7 @@ using InAsync;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting {
 
-    public static class ITestActualExtensions {
+    public static class TestActualExtensions {
 
         /// <summary>
         /// テスト対象コードの実行結果を検証します。

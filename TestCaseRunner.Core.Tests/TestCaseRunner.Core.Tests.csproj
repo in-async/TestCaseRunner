@@ -52,7 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestActualTests.cs" />
+    <Compile Include="TestActualExtensionsTests.cs" />
     <Compile Include="TestCaseRunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usage.cs" />
