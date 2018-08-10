@@ -32,7 +32,20 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting {
         public static void Verify<TResult>(this ITestActual<TResult> actual, TestActualVerifier<TResult> resultVerifier, Type expectedExceptionType) {
             if (actual == null) { throw new ArgumentNullException(nameof(actual)); }
 
-            actual.Verify(resultVerifier, (exception, description) => Assert.AreEqual(expectedExceptionType, exception?.GetType(), description));
+            actual.Verify(resultVerifier, (exception, description) => {
+                try {
+                    Assert.AreEqual(expectedExceptionType, exception?.GetType(), description);
+                }
+                catch (AssertFailedException) {
+#if NETSTANDARD1_0
+#else
+                    if (exception != null) {
+                        Console.WriteLine(exception.ToString());
+                    }
+#endif
+                    throw;
+                }
+            });
         }
 
         /// <summary>
