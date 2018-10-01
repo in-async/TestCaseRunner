@@ -115,10 +115,5 @@ namespace InAsync.Tests {
 
             ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new TestCaseRunner("desc").Run(() => (ex == null) ? result : throw ex);
         }
-
-        [TestMethod]
-        public void Verify_TResult_TResults_IComparer_Type() {
-            Assert.Fail();
-        }
     }
 }
