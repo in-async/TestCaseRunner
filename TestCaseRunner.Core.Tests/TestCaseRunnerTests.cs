@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace InAsync.Tests {
+namespace Inasync.Tests {
 
     [TestClass]
     public class TestCaseRunnerTests {

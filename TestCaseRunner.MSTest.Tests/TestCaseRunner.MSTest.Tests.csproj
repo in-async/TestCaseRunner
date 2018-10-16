@@ -7,7 +7,7 @@
     <ProjectGuid>{8648D373-0E7E-4592-BD77-4ABA2759BE7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InAsync.Tests</RootNamespace>
+    <RootNamespace>Inasync.Tests</RootNamespace>
     <AssemblyName>TestCaseRunner.MSTest.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

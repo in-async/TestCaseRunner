@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InAsync {
+namespace Inasync {
 
     /// <summary>
     /// テストを実行するクラス。

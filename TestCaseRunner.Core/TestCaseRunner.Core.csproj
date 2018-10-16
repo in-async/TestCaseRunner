@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.0;net45;netstandard1.0</TargetFrameworks>
-    <RootNamespace>InAsync</RootNamespace>
-    <AssemblyName>InAsync.TestCaseRunner.Core</AssemblyName>
+    <RootNamespace>Inasync</RootNamespace>
+    <AssemblyName>Inasync.TestCaseRunner.Core</AssemblyName>
     <Authors>inasync</Authors>
     <Description>可読性の高いテストコードを記述するための .NET ライブラリ。</Description>
     <PackageProjectUrl>https://github.com/in-async/TestCaseRunner</PackageProjectUrl>

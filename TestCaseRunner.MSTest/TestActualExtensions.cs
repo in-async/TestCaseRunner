@@ -1,5 +1,5 @@
 ﻿using System;
-using InAsync;
+using Inasync;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting {
 
