@@ -5,7 +5,7 @@
     <AssemblyName>Inasync.TestCaseRunner.MSTest</AssemblyName>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
     <Authors>inasync</Authors>
-    <Description>可読性の高いテストコードを記述するための .NET ライブラリ。</Description>
+    <Description>A .NET library for writing easy-to-read tests with MSTest.</Description>
     <PackageProjectUrl>https://github.com/in-async/TestCaseRunner</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/in-async/TestCaseRunner/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>test unittest mstest</PackageTags>
