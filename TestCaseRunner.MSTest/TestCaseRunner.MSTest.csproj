@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.0;net45;netstandard1.0</TargetFrameworks>
-    <AssemblyName>Inssync.TestCaseRunner.MSTest</AssemblyName>
+    <AssemblyName>Inasync.TestCaseRunner.MSTest</AssemblyName>
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
     <Authors>inasync</Authors>
     <Description>可読性の高いテストコードを記述するための .NET ライブラリ。</Description>
     <PackageProjectUrl>https://github.com/in-async/TestCaseRunner</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/in-async/TestCaseRunner/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>test unittest mstest</PackageTags>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
