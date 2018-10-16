@@ -1,7 +1,7 @@
 # TestCaseRunner
 [![Build status](https://ci.appveyor.com/api/projects/status/mja7dv0nxrs9u8t3/branch/master?svg=true)](https://ci.appveyor.com/project/in-async/testcaserunner/branch/master)
 
-`TestCaseRunner` は可読性の高いテストコードを記述するための .NET ライブラリです。
+***TestCaseRunner*** は可読性の高いテストコードを記述するための .NET ライブラリです。
 
 
 ## Target Frameworks
@@ -29,7 +29,7 @@ new TestCaseRunner(...)
     ...
 ```
 
-`TestCaseRunner` のコンストラクター引数にはそのテストケースの説明を書きます。必要が無ければ引数を省略してください。
+*TestCaseRunner* のコンストラクター引数にはそのテストケースの説明を書きます。必要が無ければ引数を省略してください。
 
 `Run()` の引数には、実際にテストしたいメソッドやコードを記述します。  
 ただし、ここにテスト対象でないコードは書かないで下さい。ここに非テストコードを記述すると、そこから発生した例外がテスト対象コードから生じたものとして扱われてしまいます。
@@ -48,9 +48,9 @@ new TestCaseRunner(...)
     );
 ```
 
-これらの機能は `TestCaseRunner.Core` に含まれています。
+これらの機能は **TestCaseRunner.Core** に含まれています。
 
-もしテストフレームワークに MSTest を使用しているのであれば、`TestCaseRunner.MSTest` を利用することで `Verify()` の記述を簡素化する事もできます。
+もしテストフレームワークに *MSTest* を使用しているのであれば、**TestCaseRunner.MSTest** を利用することで `Verify()` の記述を簡素化する事もできます。
 
 
 ## Usage
@@ -73,7 +73,7 @@ public void IntParseTest() {
 }
 ```
 
-### for MSTest
+### for *MSTest*
 ```cs
 [TestMethod]
 public void IntParseTest() {
@@ -117,7 +117,7 @@ public void IntParseTest() {
     };
 }
 ```
-`Run()` に渡されたテストコードの戻りちと `Verify()` の第１引数の比較方法ですが、 MSTest の場合 `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual()` によって行われます。
+`Run()` に渡されたテストコードの戻り値と `Verify()` の第１引数の比較方法ですが、 *MSTest* の場合 `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual()` によって行われます。
 
 
 ## Licence
