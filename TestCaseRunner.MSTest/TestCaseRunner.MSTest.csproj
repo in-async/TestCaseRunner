@@ -6,13 +6,13 @@
     <RootNamespace>Microsoft.VisualStudio.TestTools.UnitTesting</RootNamespace>
     <Authors>inasync</Authors>
     <Description>可読性の高いテストコードを記述するための .NET ライブラリ。</Description>
-    <PackageLicenseUrl>https://github.com/in-async/TestCaseRunner/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/in-async/TestCaseRunner</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/in-async/TestCaseRunner/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>test unittest mstest</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
