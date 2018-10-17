@@ -44,7 +44,7 @@ new TestCaseRunner(...)
 ```cs
     .Run(() => int.Parse("123"))
     .Verify(
-        (result, description) => { /* ここで result の検証 */ },
+        (actual, description) => { /* ここで actual の検証 */ },
         (exception, description) => { /* ここで exception の検証 */ }
     );
 ```
@@ -61,14 +61,14 @@ public void IntParseTest() {
     new TestCaseRunner("Success")
         .Run(() => int.Parse("123"))
         .Verify(
-            (result, description) => result.Is(123, description),
+            (actual, description) => actual.Is(123, description),
             (exception, description) => exception?.GetType().Is(null, description)
         );
 
     new TestCaseRunner("Exception")
         .Run(() => int.Parse("abc"))
         .Verify(
-            (result, description) => { },
+            (actual, description) => { },
             (exception, description) => exception?.GetType().Is(typeof(FormatException), description)
         );
 }
@@ -112,9 +112,9 @@ public void IntParseTest() {
     }
 
     (int testNumber, string input, int expected, Type expectedExceptionType)[] TestCases() => new[] {
-        (0, null , 0  , typeof(ArgumentNullException)),
-        (1, "123", 123, null),
-        (2, "abc", 0  , typeof(FormatException)),
+        (0, null , 0  , (Type)typeof(ArgumentNullException)),
+        (1, "123", 123, (Type)null),
+        (2, "abc", 0  , (Type)typeof(FormatException)),
     };
 }
 ```
