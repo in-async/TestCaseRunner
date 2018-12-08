@@ -12,11 +12,11 @@ namespace Inasync.Tests {
                 var message = $"No.{item.testNumber}";
 
                 var resultVerifierCalled = false;
-                var resultVerifierWrapper = (item.resultVerifier == null) ? (TestActualVerifier<int>)null : (result, description) => {
+                var resultVerifierWrapper = (item.resultVerifier == null) ? (TestActualVerifier<int>)null : (actual, description) => {
                     resultVerifierCalled = true;
-                    Assert.AreEqual(result, item.testActual.Result);
+                    Assert.AreEqual(actual, item.testActual.Result);
                     Assert.AreEqual(description, item.testActual.Description);
-                    item.resultVerifier(result, description);
+                    item.resultVerifier(actual, description);
                 };
                 var exceptionVerifierCalled = false;
                 var exceptionVerifierWrapper = (item.exceptionVerifier == null) ? (TestActualVerifier<Exception>)null : (exception, description) => {
@@ -50,7 +50,7 @@ namespace Inasync.Tests {
             };
 
             ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new TestCaseRunner("desc").Run(() => (ex == null) ? result : throw ex);
-            TestActualVerifier<int> ResultVerifier() => (result, description) => { };
+            TestActualVerifier<int> ResultVerifier() => (actual, description) => { };
             TestActualVerifier<Exception> ExceptionVerifier() => (exception, description) => { };
         }
 
