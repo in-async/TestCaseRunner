@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Inasync.Tests {
@@ -41,7 +42,6 @@ namespace Inasync.Tests {
                 (15, TestActual(new ArgumentException()), ResultVerifier(), typeof(ArgumentException), false, (Type)null),
             };
 
-            ITestActual TestActual(Exception ex) => new TestCaseRunner("desc").Run(() => { if (ex != null) throw ex; });
             TestActualVerifier ResultVerifier() => (description) => { };
         }
 
@@ -82,12 +82,11 @@ namespace Inasync.Tests {
                 (17, TestActual( 0, new ArgumentException()), ResultVerifier(), typeof(ArgumentException), false, (Type)null),
             };
 
-            ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new TestCaseRunner("desc").Run(() => (ex == null) ? result : throw ex);
             TestActualVerifier<int> ResultVerifier() => (result, description) => { };
         }
 
         [TestMethod]
-        public void Verify_TResult_TResult_Type() {
+        public void Verify_TResult_TResult_Type_String() {
             foreach (var item in TestCases()) {
                 var message = $"No.{item.testNumber}";
 
@@ -101,19 +100,55 @@ namespace Inasync.Tests {
             }
 
             // テストケース定義。
-            IEnumerable<(int testNumber, ITestActual<int> testActual, int result, Type exceptionType, Type expectedExceptionType)> TestCases() => new[]{
-                (10, TestActual( 0, null)                   , 0, null                     , (Type)null),
-                (11, TestActual( 1, null)                   , 0, null                     , (Type)typeof(AssertFailedException)),
-                (12, TestActual( 0, null)                   , 1, null                     , (Type)typeof(AssertFailedException)),
-                (13, TestActual( 1, null)                   , 1, null                     , (Type)null),
-                (14, TestActual( 0, null)                   , 0, typeof(Exception)        , (Type)typeof(AssertFailedException)),
-                (15, TestActual( 0, new Exception())        , 0, null                     , (Type)typeof(AssertFailedException)),
-                (16, TestActual( 0, new Exception())        , 0, typeof(Exception)        , (Type)null),
-                (17, TestActual( 0, new Exception())        , 0, typeof(ArgumentException), (Type)typeof(AssertFailedException)),
-                (18, TestActual( 0, new ArgumentException()), 0, typeof(ArgumentException), (Type)null),
+            IEnumerable<(int testNumber, ITestActual<string> testActual, string result, Type exceptionType, Type expectedExceptionType)> TestCases() => new[]{
+                (10, TestActual(""   , null)                   , ""   , null                     , (Type)null),
+                (11, TestActual(""   , null)                   , "foo", null                     , (Type)typeof(AssertFailedException)),
+                (12, TestActual(""   , null)                   , ""   , typeof(Exception)        , (Type)typeof(AssertFailedException)),
+                (13, TestActual("foo", null)                   , ""   , null                     , (Type)typeof(AssertFailedException)),
+                (14, TestActual("foo", null)                   , "foo", null                     , (Type)null),
+                (15, TestActual(""   , new Exception())        , ""   , null                     , (Type)typeof(AssertFailedException)),
+                (16, TestActual(""   , new Exception())        , ""   , typeof(Exception)        , (Type)null),
+                (17, TestActual(""   , new Exception())        , ""   , typeof(ArgumentException), (Type)typeof(AssertFailedException)),
+                (18, TestActual(""   , new ArgumentException()), ""   , typeof(ArgumentException), (Type)null),
+            };
+        }
+
+        [TestMethod]
+        public void Verify_TResult_TResult_Type_Collection() {
+            foreach (var item in TestCases()) {
+                var message = $"No.{item.testNumber}";
+
+                try {
+                    item.testActual.Verify(item.result, item.exceptionType);
+                }
+                catch (Exception ex) {
+                    Assert.AreEqual(item.expectedExceptionType, ex.GetType(), message);
+                    continue;
+                }
+            }
+
+            // テストケース定義。
+            IEnumerable<(int testNumber, ITestActual<IEnumerable<object>> testActual, object[] result, Type exceptionType, Type expectedExceptionType)> TestCases() => new[]{
+                (10, TestActual(Objs(0, "").AsEnumerable(), null)                   , Objs(0, ""), null                     , (Type)null),
+                (11, TestActual(Objs(0, "").AsEnumerable(), null)                   , Objs(1, ""), null                     , (Type)typeof(AssertFailedException)),
+                (12, TestActual(Objs(0, "").AsEnumerable(), null)                   , Objs(0, ""), typeof(Exception)        , (Type)typeof(AssertFailedException)),
+                (13, TestActual(Objs(1, "").AsEnumerable(), null)                   , Objs(0, ""), null                     , (Type)typeof(AssertFailedException)),
+                (14, TestActual(Objs(1, "").AsEnumerable(), null)                   , Objs(1, ""), null                     , (Type)null),
+                (15, TestActual(Objs(0, "").AsEnumerable(), new Exception())        , Objs(0, ""), null                     , (Type)typeof(AssertFailedException)),
+                (16, TestActual(Objs(0, "").AsEnumerable(), new Exception())        , Objs(0, ""), typeof(Exception)        , (Type)null),
+                (17, TestActual(Objs(0, "").AsEnumerable(), new Exception())        , Objs(0, ""), typeof(ArgumentException), (Type)typeof(AssertFailedException)),
+                (18, TestActual(Objs(0, "").AsEnumerable(), new ArgumentException()), Objs(0, ""), typeof(ArgumentException), (Type)null),
             };
 
-            ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new TestCaseRunner("desc").Run(() => (ex == null) ? result : throw ex);
+            object[] Objs(params object[] objs) => objs;
         }
+
+        #region Helpers
+
+        private static ITestActual TestActual(Exception ex) => new TestCaseRunner().Run(() => (ex != null) ? throw ex : (object)null);
+
+        private static ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new TestCaseRunner().Run(() => (ex != null) ? throw ex : result);
+
+        #endregion Helpers
     }
 }

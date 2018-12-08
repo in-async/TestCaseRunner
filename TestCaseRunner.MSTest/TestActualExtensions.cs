@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using Inasync;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting {
@@ -42,7 +44,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting {
         public static void Verify<TResult>(this ITestActual<TResult> actual, TResult expectedResult, Type expectedExceptionType) {
             Inasync.TestActualExtensions.Verify(
                   actual
-                , (result, description) => Assert.AreEqual(expectedResult, result, description)
+                , (result, description) => {
+                    if (typeof(TResult) != typeof(string) && expectedResult is IEnumerable expectedResults) {
+                        CollectionAssert.AreEqual(expectedResults?.Cast<object>().ToArray(), (result as IEnumerable)?.Cast<object>().ToArray(), description);
+                    }
+                    else {
+                        Assert.AreEqual(expectedResult, result, description);
+                    }
+                }
                 , CreateDefaultExceptionVerifier(expectedExceptionType)
             );
         }
