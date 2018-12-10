@@ -138,6 +138,7 @@ namespace Inasync.Tests {
                 (16, TestActual(Objs(0, "").AsEnumerable(), new Exception())        , Objs(0, ""), typeof(Exception)        , (Type)null),
                 (17, TestActual(Objs(0, "").AsEnumerable(), new Exception())        , Objs(0, ""), typeof(ArgumentException), (Type)typeof(AssertFailedException)),
                 (18, TestActual(Objs(0, "").AsEnumerable(), new ArgumentException()), Objs(0, ""), typeof(ArgumentException), (Type)null),
+                (19, TestActual(Objs(0, "").AsEnumerable(), null)                   , null       , null                     , (Type)typeof(AssertFailedException)),
             };
 
             object[] Objs(params object[] objs) => objs;

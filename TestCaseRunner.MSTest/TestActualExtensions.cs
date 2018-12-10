@@ -45,8 +45,10 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting {
             Inasync.TestActualExtensions.Verify(
                   actual
                 , (result, description) => {
-                    if (typeof(TResult) != typeof(string) && expectedResult is IEnumerable expectedResults) {
-                        CollectionAssert.AreEqual(expectedResults?.Cast<object>().ToArray(), (result as IEnumerable)?.Cast<object>().ToArray(), description);
+                    if (typeof(TResult) != typeof(string) && actual.Result is IEnumerable actualResults) {
+                        var actualCollection = actualResults.Cast<object>().ToArray();
+                        var expectedCollection = (expectedResult as IEnumerable)?.Cast<object>().ToArray();
+                        CollectionAssert.AreEqual(expectedCollection, actualCollection, description);
                     }
                     else {
                         Assert.AreEqual(expectedResult, result, description);
