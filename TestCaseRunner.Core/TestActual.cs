@@ -2,6 +2,9 @@
 
 namespace Inasync {
 
+    /// <summary>
+    /// テスト結果を表す型。
+    /// </summary>
     public interface ITestActual {
 
         /// <summary>
@@ -10,15 +13,19 @@ namespace Inasync {
         string Description { get; }
 
         /// <summary>
-        /// テスト対象コードから生じた例外。
+        /// テスト中に生じた例外。
         /// </summary>
         Exception Exception { get; }
     }
 
+    /// <summary>
+    /// テスト結果を表す型。
+    /// </summary>
+    /// <typeparam name="TResult">テストの戻り値の型。</typeparam>
     public interface ITestActual<TResult> : ITestActual {
 
         /// <summary>
-        /// テスト対象コードの戻り値。
+        /// テストの戻り値。
         /// </summary>
         TResult Result { get; }
     }

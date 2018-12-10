@@ -90,7 +90,6 @@ public void IntParseTest() {
 
 より実践的には、下記のように利用します。
 ```cs
-// for MSTest v2
 [DataTestMethod]
 [DataRow(0, null, null, typeof(ArgumentNullException))]
 [DataRow(1, "123", 123, null)]
@@ -101,8 +100,8 @@ public void IntParseTest(int testNumber, string input, int expected, Type expect
         .Verify(expected, expectedExceptionType);
 }
 ```
+または
 ```cs
-// for MSTest v1
 [TestMethod]
 public void IntParseTest() {
     foreach (var item in TestCases()) {
@@ -118,7 +117,7 @@ public void IntParseTest() {
     };
 }
 ```
-`Run()` に渡されたテストコードの戻り値と `Verify()` の第１引数の比較方法ですが、 *MSTest* の場合 `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual()` によって行われます。
+`Run()` に渡されたテストコードの戻り値と `Verify()` の第１引数の比較は、*MSTest* の場合 [Assert.AreEqual()](https://docs.microsoft.com/ja-jp/dotnet/api/microsoft.visualstudio.testtools.unittesting.assert.areequal?view=mstest-net-1.2.0) または [CollectionAssert.AreEqual()](https://docs.microsoft.com/ja-jp/dotnet/api/microsoft.visualstudio.testtools.unittesting.collectionassert.areequal?view=mstest-net-1.2.0) によって行われます。
 
 
 ## Licence

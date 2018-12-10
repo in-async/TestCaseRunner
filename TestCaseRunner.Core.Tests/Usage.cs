@@ -12,7 +12,7 @@ namespace Inasync.Tests {
                 new TestCaseRunner($"No.{item.testNumber}")
                     .Run(() => int.Parse(item.input))
                     .Verify(
-                        (result, description) => Assert.AreEqual(item.expected, result, description),
+                        (actual, description) => Assert.AreEqual(item.expected, actual, description),
                         (exception, description) => Assert.AreEqual(item.expectedExceptionType, exception?.GetType(), description)
                     );
             }

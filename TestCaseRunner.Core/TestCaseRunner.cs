@@ -8,7 +8,7 @@ namespace Inasync {
     public struct TestCaseRunner {
 
         /// <summary>
-        /// <see cref="TestCaseRunner"/> のコンストラクター。
+        /// <see cref="TestCaseRunner"/> を作成します。
         /// </summary>
         /// <param name="description">テストの説明。</param>
         public TestCaseRunner(string description) {
@@ -24,7 +24,7 @@ namespace Inasync {
         /// 対象コードのテストを実施します。
         /// </summary>
         /// <typeparam name="TResult">対象コードの戻り値の型。</typeparam>
-        /// <param name="targetCode">テストの対象コード。</param>
+        /// <param name="targetCode">テスト対象のコード。</param>
         /// <returns>対象コードの実行結果。</returns>
         /// <exception cref="ArgumentNullException"><paramref name="targetCode"/> is <c>null</c>.</exception>
         public ITestActual<TResult> Run<TResult>(Func<TResult> targetCode) {
@@ -42,7 +42,7 @@ namespace Inasync {
         /// <summary>
         /// 対象コードのテストを実施します。
         /// </summary>
-        /// <param name="targetCode">テストの対象コード。</param>
+        /// <param name="targetCode">テスト対象のコード。</param>
         /// <returns>対象コードの実行結果。</returns>
         /// <exception cref="ArgumentNullException"><paramref name="targetCode"/> is <c>null</c>.</exception>
         public ITestActual Run(Action targetCode) {
