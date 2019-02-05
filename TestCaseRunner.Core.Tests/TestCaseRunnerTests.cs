@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Inasync.Tests {
@@ -68,6 +69,40 @@ namespace Inasync.Tests {
         }
 
         [TestMethod]
+        public void Run_TaskResult() {
+            foreach (var item in TestCases()) {
+                var message = $"No.{item.testNumber}";
+
+                var runner = new TestCaseRunner("desc");
+                ITestActual<int> actual;
+                try {
+                    actual = runner.Run(item.targetCode);
+                }
+                catch (Exception ex) {
+                    Assert.AreEqual(item.expectedExceptionType, ex.GetType(), message);
+                    continue;
+                }
+
+                Assert.AreEqual(item.expected.Description, actual.Description, message);
+                Assert.AreEqual(item.expected.Exception?.GetType(), actual.Exception?.GetType(), message);
+                Assert.AreEqual(item.expected.Result, actual.Result, message);
+            }
+
+            // テストケース定義。
+            (int testNumber, Func<Task<int>> targetCode, ITestActual<int> expected, Type expectedExceptionType)[] TestCases() => new[]{
+                ( 0, null                                     , null                                   , typeof(ArgumentNullException)),
+                (10, Code(() => Task.FromResult( 0))          , TestActual( 0, null)                   , (Type)null),
+                (11, Code(() => Task.FromResult( 1))          , TestActual( 1, null)                   , (Type)null),
+                (12, Code(() => Task.FromResult(-1))          , TestActual(-1, null)                   , (Type)null),
+                (13, Code(() => throw new Exception())        , TestActual( 0, new Exception())        , (Type)null),
+                (14, Code(() => throw new ArgumentException()), TestActual( 0, new ArgumentException()), (Type)null),
+            };
+
+            ITestActual<TResult> TestActual<TResult>(TResult result, Exception ex) => new StubITestActual<TResult>("desc") { Result = result, Exception = ex };
+            Func<Task<int>> Code(Func<Task<int>> targetCode) => targetCode;
+        }
+
+        [TestMethod]
         public void Run() {
             foreach (var item in TestCases()) {
                 var message = $"No.{item.testNumber}";
@@ -96,6 +131,37 @@ namespace Inasync.Tests {
 
             ITestActual TestActual(Exception ex) => new StubITestActual("desc") { Exception = ex };
             Action Code(Action targetCode) => targetCode;
+        }
+
+        [TestMethod]
+        public void Run_Task() {
+            foreach (var item in TestCases()) {
+                var message = $"No.{item.testNumber}";
+
+                var runner = new TestCaseRunner("desc");
+                ITestActual actual;
+                try {
+                    actual = runner.Run(item.targetCode);
+                }
+                catch (Exception ex) {
+                    Assert.AreEqual(item.expectedExceptionType, ex.GetType(), message);
+                    continue;
+                }
+
+                Assert.AreEqual(item.expected.Description, actual.Description, message);
+                Assert.AreEqual(item.expected.Exception?.GetType(), actual.Exception?.GetType(), message);
+            }
+
+            // テストケース定義。
+            (int testNumber, Func<Task> targetCode, ITestActual expected, Type expectedExceptionType)[] TestCases() => new[]{
+                ( 0, null                                     , null                               , typeof(ArgumentNullException)),
+                (10, Code(() => Task.CompletedTask)           , TestActual(null)                   , (Type)null),
+                (11, Code(() => throw new Exception())        , TestActual(new Exception())        , (Type)null),
+                (12, Code(() => throw new ArgumentException()), TestActual(new ArgumentException()), (Type)null),
+            };
+
+            ITestActual TestActual(Exception ex) => new StubITestActual("desc") { Exception = ex };
+            Func<Task> Code(Func<Task> targetCode) => targetCode;
         }
 
         #region Helpers
