@@ -13,9 +13,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCaseRunner.MSTest.Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F5A0CD0-2422-4058-8F1C-92DE600E037B}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8E52A269-FE7A-466C-B8A0-B24830BB10B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0F206C3F-549E-4B47-8ABD-2DA979A4C55B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +49,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02D6A9EB-8E20-475A-85A9-1CF68BC73425} = {8E52A269-FE7A-466C-B8A0-B24830BB10B3}
+		{C4F6EF2F-B585-4C78-A824-B92EBC2B0027} = {8E52A269-FE7A-466C-B8A0-B24830BB10B3}
+		{851F733F-01FA-4937-8A39-02DBDE4EB972} = {0F206C3F-549E-4B47-8ABD-2DA979A4C55B}
+		{8648D373-0E7E-4592-BD77-4ABA2759BE7F} = {0F206C3F-549E-4B47-8ABD-2DA979A4C55B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D64100D8-E967-4CD5-B483-A3FDDBA57745}
